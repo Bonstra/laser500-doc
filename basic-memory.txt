@@ -1,0 +1,212 @@
+BASIC ROM system variables
+
+Address (hex)		Description
+8000			RST 0x8 jumps here
+8003			RST 0x10 jumps here
+8006			RST 0x18 jumps here
+8009			RST 0x20 jumps here
+800c			RST 0x28 jumps here
+800f			RST 0x30 jumps here
+8012			INTERRUPT ROUTINE EXIT POINT
+8015-801a		Reserved
+801b-802e		USR function addresses
+802f			Number of nulls
+8030			store eaten char when not CTRL-C
+8031			save error number
+8032			last line printer operation. 0=LF
+8033			position of printer head
+8034			0 = output to screen
+			1 = output to printer
+			0x80 = output to cassette
+8035			last column number beyond which no more comma field
+8036			default line printer width
+8037			line length
+8038			position of last comma column
+8039			reserved
+803a			supress output flag
+803b-803c		reserved
+803d			top location to use for the stack (TOPMEM)
+803f			current line number
+8041			pointer to beginning of text (TXTTAB)
+8043			address of message to print (overflow)
+8045-8149		reserved
+814a-8287		krunch buffer
+8288			store a comma
+8289-838b		keyboard buffer, type in stored here
+838c			reserved
+838d			in getting a pointer to a variable
+838e			variable type
+838f			store operation number
+8390			reserved
+8391			save text pointer used by CHRGET
+8393			saved token for a constant
+8394			saved constant type
+8395			saved constant value
+839d			highest location in memory (MEMSIZ)
+839f			pointer at first free temp descriptor
+83a1			storage for numtmp temp descriptors
+83bf			string function build answer descriptor here
+83c0			where string address is stored in 83bf
+83c2			top of string free space (FRETOP)
+83c4			used to store the address of the end of the string
+			arrays in garbage collection
+83c8			saved text pointer at end of "FOR" statement
+83c9			used by garbage collection
+83ca			data line number - remember for errors
+83cc			flag whether subscripted variable allowed
+83cd			flag whether we are doing input
+83ce			reserved
+83d0			zero if no line number converted to pointer
+83d1			flag to indicate auto command in
+83d2			current line beint inserted by auto
+83d4			auto increment
+83d6			place where text pointers are saved
+83d8			stack saved here before execution
+83da			line number where last error occured
+83dc			keeps current line for list
+83de			text pointer for use by "RESUME"
+83e0			line to goto when an error occurs
+83e2			equals to one if an error trap routine executing
+83e3			formula evaluator temp old line number (set
+			up by CTRL-C, STOP)
+83e7			old text pointer
+83e9			pointer to start of simple variable (VARTAB)
+83eb			pointer to beginning of array table (ARYTAB)
+83ed			end of storage in use (STREND)
+83ef			POINTOR TO DATA, used by READ statement
+80f1-840a		This table gives the default variable type for
+			each letter of the alphabet
+840b			previous definition block on stack
+840d			number of bytes in the active table
+840f-8472		active parameter table
+8473			the pointer at the previous parameter block
+			(for garbage collection)
+8475			size of parameter block being built
+8477			place to keep parameters being made
+84db			used by PTRGET to flag if PARM1 has been search
+84dc			stopping point for simple search
+84de			zero if no functions active
+84df			garbage collection temp
+84e1			count of active function
+84e3			flag telling whether input is scanning first or
+			second time. 0 if first
+84e4			save text pointer at start of next
+84e6			0 is 'FOR' is using NEXT code
+84e7			use to store the start value of the loop variable
+84eb			the line number during scan for 'NEXT'
+84ed			0 = OPTION BASE 0
+			1 = OPTION BASE 1
+84ee			NON-zero if option base scanned
+84ef-8515		reserved
+8516			pointer to end line to delete
+8518			pointer to start line to delete
+851a-851c		reserved
+851d			value to first 'swap' variable stored here
+8525			0 = no trace in progress
+8527-852f		floating point accumulator
+8530			overflow print flag
+8531			place to store overflow flag
+8532			flag to force fixed output
+8534-8584		used by math package
+8585			RAM EXIT for COMMON
+8588			RAM EXIT for CHAIN
+858b			RAM EXIT for SYSTEM
+858e			RAM EXIT for OPEN
+8591			RAM EXIT for FIELD
+8594			RAM EXIT for GET
+8597			RAM EXIT for PUT
+859a			RAM EXIT for CLOSE
+859d			RAM EXIT for LOAD
+85a0			RAM EXIT for MERGE
+85a3			RAM EXIT for FILES
+85a6			RAM EXIT for NAME
+85a9			RAM EXIT for KILL
+85ac			RAM EXIT for LSET
+85af			RAM EXIT for RSET
+85b2			RAM EXIT for SAVE
+85b5			RAM EXIT for RESET
+85b8			RAM EXIT for PAINT
+85bb			RAM EXIT for EOF
+85be			RAM EXIT for LOC
+85c1			RAM EXIT for LOF
+85c4			RAM EXIT from Execution phase
+85c7			RAM EXIT from Screen driver
+85ca			RAM EXIT from keyboard driver
+85cd			RAM EXIT from RUN
+85d0			RAM EXIT from COPY
+85d3-85e1		Reserve
+85e2			cursor address
+85e4			top of window
+85e5			bottom of window
+85e6			left margin of window
+85e7			width of window
+85e8			row number of cursor
+85e9			column number of cursor
+85ea			pointer to un-shift key code table
+85ec			pointer to shift key code table
+85ee			pointer to control key code table
+85f0			buffer to hold key pressed
+85f1-85f4		reserved
+85f5			auto-repeat delay
+85f6			auto-repeat period
+85f7			reserved
+85f9			image of peripheral register
+85fa-85fc		reserved
+85fd			1 = 80 column
+			0 = 40 column
+85fe			graphic mode
+85ff			max width of graphic mode
+8601			max height of graphic mode
+8602-8603		reserved
+8604			copy of character covered by cursor
+8605			address cursor flag
+8606			cursor flash counter
+8607			flash period
+8608			seek track
+8609			sector
+860a			current track number
+860b			pointer to disk buffer
+860d			primary buffer pointer
+860f			read table vector
+8611			retry counter
+8612			controller latch image
+8613			disk drive stepper phase image
+8614			graphic cursor X-coordinate
+8616			graphic cursor Y-coordinate
+8617-861c		used by draw line routine
+861d			reset routine address
+861f			warm start signature byte
+			= reset high address + low address + 0xe1
+863c			check sum of tape
+863e			length of file name
+863f			tape filename
+8650			temp area for tape filename
+8662			used by tape routine
+8664			location of video bank
+8665			image of I/O port 0x40
+8666			image of I/O port 0x41
+8667			image of I/O port 0x42
+8668			image of I/O port 0x43
+8669			image of I/O port 0x44
+866a			image of I/O port 0x45
+866b			used by tape routine
+866d-8684		screen line status
+8685-8992		disk buffer
+
+BASIC interpreter memory usage
+
++------------------------+ <- TOPMEM (0x803d)
+|      Stack space       |
++------------------------+ <- MEMSIZ (0x839d)
+|        Strings         |
++------------------------+ <- FRETOP (0x83c2)
+|       Free space       |
++------------------------+ <- STREND (0x83ed)
+|     Array variables    |
++------------------------+ <- ARYTAB (0x83eb)
+|    Simple variables    |
++------------------------+ <- VARTAB (0x83e9)
+|     BASIC program      |
++------------------------+ <- TXTTAB (0x8041) (default value: 0x8995)
+|    System variables    |
++------------------------+ 0x8000
