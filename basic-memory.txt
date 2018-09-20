@@ -134,8 +134,9 @@ Address (hex)		Description
 85ca			RAM EXIT from keyboard driver
 85cd			RAM EXIT from RUN
 85d0			RAM EXIT from COPY
-85d3-85e1		Reserve
-85e2			cursor address
+85d3-85e1		Reserved (other vectors)
+85e2			cursor address (in video RAM when video bank is mapped
+			in slot 1)
 85e4			top of window
 85e5			bottom of window
 85e6			left margin of window
@@ -170,7 +171,8 @@ Address (hex)		Description
 860f			read table vector
 8611			retry counter
 8612			controller latch image
-8613			disk drive stepper phase image
+8613			disk drive stepper phase image (low and high nibbles
+			are identical, value is rotated on each step)
 8614			graphic cursor X-coordinate
 8616			graphic cursor Y-coordinate
 8617-861c		used by draw line routine
