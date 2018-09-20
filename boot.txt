@@ -1,0 +1,23 @@
+ROM boot sequence
+
+During boot, the ROM will first look for a valid boot signature in the ROM
+expansion space. The signature is the sequence of bytes AA 55 E7 18.
+Such sequence will be searched in ROM space at the following physical
+addresses, in order:
+- 0x08000
+- 0x30000
+- 0x34000
+- 0x38000
+- 0x3c000
+
+If the boot signature is found, the ROM jumps at {signature addres + 0x4}.
+
+Next, the ROM looks for the presence of a floppy disk interface.
+The ROM writes the value 0x00 in I/O port 0x10 in order to reset a potential
+FDC.
+Then, the ROM writes the value 0xaa to port 0x13 (FDC data buffer) and
+reads the result back.
+If the values are identical, a second test is attempted with value 0x40. If it
+succeeds too, the disk controller interface is present.
+If the FDC is present, the ROM loads 256 bytes from sector 0 of track 0 into
+memory and runs it.

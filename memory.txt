@@ -1,0 +1,70 @@
+Memory layout
+
+The Laser 500 physical memory layout is organized in 16x16KB banks.
+
+Bank	Physical address	Description
+0x0	0x00000-0x03fff		BASIC ROM 0
+0x1	0x04000-0x07fff		BASIC ROM 1
+
+0x2	0x08000-0x0a7ff		Expansion ROM
+0x2	0x0a800-0x0afff		VLSI memory-mapped I/O
+0x2	0x0b000-0x0bfff		?
+
+0x3	0x0c000-0x0ffff		(Laser 350) RAM
+
+0x4	0x10000-0x13fff		(Laser 500/700) RAM
+0x5	0x14000-0x17fff		(Laser 500/700) RAM
+0x6	0x18000-0x1bfff		(Laser 500/700) RAM
+0x7	0x1c000-0x1ffff		(Laser 500/700) RAM
+
+0x8	0x20000-0x23fff		(Laser 700) RAM
+0x9	0x24000-0x27fff		(Laser 700) RAM
+0xa	0x28000-0x2bfff		(Laser 700) RAM
+0xb	0x2c000-0x2ffff		(Laser 700) RAM
+
+0xc	0x30000-0x33fff		Expansion ROM
+0xd	0x34000-0x37fff		Expansion ROM
+0xe	0x38000-0x3bfff		Expansion ROM
+0xf	0x3c000-0x3ffff		Expansion ROM
+
+DRAM layout
+
+The VLSI acts as a DRAM memory controller which is transparent to the CPU.
+The DRAM space is divided into 3 "ranks", each having its own /CAS line,
+controlled independently by the VLSI depending on the DRAM bank where the
+memory access needs to take place.
+All ranks share common 8-bit data bus, 8-bit address bus, as well common /RAS
+and /RAMW signals.
+
+Rank	/CAS line	Size	Banks
+1	/CAS1		16KB	3
+4	/CAS4		64KB	4, 5, 6, 7
+5	/CAS5		64KB	8, 9, a, b
+
+Rank 1 is physically implemented with 2 x 4416 DRAM modules (16K x 4-bit
+data).
+Ranks 4 & 5 are implemented using 8 x 4164 DRAM modules (64K x 1-bit data).
+
+DRAM refresh
+
+The DRAM modules need to be periodically refreshed in order to retain their
+data. The VLSI performs DRAM refresh during the VIDEO cycles.
+DRAM refreshing consists in cycling through all the rows and refresh them one
+by one. To refresh a single row, the VLSI outputs the row address, asserts
+/RAS, then release /RAS without asserting /CAS, like it would have done for a
+normal read or write operation.
+Since all the DRAM chips share the address bus and the /RAS line, all the
+DRAM chips are refreshed at once.
+Several datasheets for 4416 and 4164 DRAM ICs indicates that all the 128 rows
+must be refreshed at least every 2ms.
+
+RAM expansion
+
+Both Laser 350, 500 and 700 can theoretically be expanded up to 144KB of RAM.
+In practice however, some Laser 700 units do not even have the internal RAM
+expansion port soldered on the board, which limits them to the built-in
+128KB.
+
+The RAM expansion module is composed of DRAM chips organized in a similar
+fashion as what is described in the "DRAM layout" section. The DRAM ICs of
+course must have compatible timings and internal organization (128 rows).

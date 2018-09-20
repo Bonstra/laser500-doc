@@ -1,0 +1,12 @@
+I/O ports
+
+VLSI I/O ports:
+
+Address Access	Function
+0x40	WO	Bank selection for slot 0
+0x41	WO	Bank selection for slot 1
+0x42	WO	Bank selection for slot 2
+0x43	WO	Bank selection for slot 3
+0x44	WO	Video mode selection
+0x45	WO	Global color selection
+

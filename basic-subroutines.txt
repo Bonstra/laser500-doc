@@ -1,0 +1,36 @@
+Subroutines provided by the BASIC ROM
+
+Address	Name		Description
+0x000b	CONOUT		Output to console
+			Output character in register A to the screen.
+
+0x0013	CONIN		Console input
+			Read a character from the keyboard into register A.
+
+0x0023	ROLLOVER	Scan the keyboard matrix and store character code in
+			register A.
+
+0x0033	READSC		Read from disk
+			Read a sector from the floppy disk unit.
+			Inputs:
+			- 0x8608: track
+			- 0x8609: sector
+			- 0x860b: data buffer pointer (256 bytes)
+			- 0x860d: primary buffer pointer (342 bytes)
+			- 0x860f: read table pointer (106 bytes, defaults to
+			          0xa196, contents copied from ROM on boot)
+			Outputs!
+			- Flag CY is set on error, cleared on success
+			- 256 bytes of sector data are copied into the data
+			  buffer (0x860b)
+			- The current track number (0x860a) is updated.
+
+			Buffer addresses used by ROM:
+			0x860b (data) -> 0xa200
+			0x860d (prim) -> 0xa000
+			0x860f (tabl) -> 0xa196
+
+0x0047	RDBYET		Read a byte from the cassette into register A.
+
+0x004a	WRBYET		Write a byte from register A to the cassette.
+
