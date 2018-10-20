@@ -15,11 +15,14 @@ Address	Name		Description
 			Inputs:
 			- 0x8608: track
 			- 0x8609: sector
-			- 0x860b: data buffer pointer (256 bytes)
-			- 0x860d: primary buffer pointer (342 bytes)
+			- 0x860b: data buffer pointer (256 bytes), where the
+			          decoded buffer will be written.
+			- 0x860d: primary buffer pointer (342 bytes), used to
+			          store a GCR-encoded sector.
 			- 0x860f: read table pointer (106 bytes, defaults to
-			          0xa196, contents copied from ROM on boot)
-			Outputs!
+			          0xa196, contents copied from ROM (0x6b2c)
+			          on boot). It is the GCR decoding table.
+			Outputs:
 			- Flag CY is set on error, cleared on success
 			- 256 bytes of sector data are copied into the data
 			  buffer (0x860b)

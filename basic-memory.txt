@@ -166,9 +166,10 @@ Address (hex)		Description
 8608			seek track
 8609			sector
 860a			current track number
-860b			pointer to disk buffer
-860d			primary buffer pointer
-860f			read table vector
+860b			pointer to disk buffer (decoded sector data)
+860d			primary buffer pointer (GCR-encoded data)
+860f			read table vector (GCR decoding table, low byte must
+			be 0x96)
 8611			retry counter
 8612			controller latch image
 8613			disk drive stepper phase image (low and high nibbles
