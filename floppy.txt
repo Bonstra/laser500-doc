@@ -52,8 +52,8 @@ Bit(s)	Description
 	When reading: 0 = data not ready
 	              1 = data ready
 6-1	Reserved
-0	Write protect sense: 0 = write-protected
-	                     1 = not write-protected
+0	Write protect sense: 0 = not write-protected
+	                     1 = write-protected
 	Status of the WPROT input (for selected drive).
 
 0x13: Data write register
