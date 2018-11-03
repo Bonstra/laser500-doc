@@ -1,0 +1,45 @@
+DOS 1.0 memory layout (date code: 17/01/86)
+
+The DOS is loaded into bank 6 RAM at offset 0x1e00.
+Whenever DOS functions are run, the DOS code in bank 6 is mapped to region
+0x4000-0x7fff.
+
+The DOS reserves a work area at the end of BASIC RAM: 0xfb00-0xffff.
+
+The resident code in that area is used as trampoline to switch between ROM
+bank 1 and DOS RAM bank 6 in slot 0x4000-0x7fff.
+
+DOS 1.0 vectors
+
+The DOS sets up the following RST vectors:
+
+Address	Description			Vector
+0x8000	RST 0x08			jp 0x6064
+0x8003	RST 0x10			jp 0x003b
+0x8006	RST 0x18			jp 0xff3b
+0x85c4	RAM EXIT from execution phase	jp 0xff1c
+
+DOS 1.0 work area (0xfb00-0xffff)
+
+Address (hex)		Description
+0xfb00-0xfb3f		GCR encoding table
+0xfb96-0xfbff		GCR decoding table
+0xfc00-0xf???		Probably primary and data buffers?
+0xfe60-0xfedf		DOS variables
+0xfee0-0xffac		Resident code + strings (copied from DOS region
+			0x1a4-0x270)
+
+DOS 1.0 variables
+
+IY=0xfe60
+
+Address (hex)		Description
+IY+0x0b			? (0x40)
+IY+0x14			? (0x11)
+IY+0x17			? (0x00)
+IY+0x2c			? (0x00)
+IY+0x43			Image of FDC register 0x10 (copied from 0x8612)
+IY+0x48			? (0x00)
+IY+0x7d			? (0x00)
+IY+0x7f			? (0x02)
+
